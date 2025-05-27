@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Weather App</h1>
+
+    <!-- Search Form -->
+    <form method="POST">
+        <input type="text" name="city" placeholder="Enter city name" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <!-- Weather Result -->
+    {% if weather %}
+        <div class="weather-result">
+            <h2>Weather in {{ weather.city }}</h2>
+            <p>Temperature: {{ weather.temperature }}°C</p>
+            <p>Description: {{ weather.description }}</p>
+            <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather Icon">
+        </div>
+    {% elif error %}
+        <p style="color:red; text-align: center;">{{ error }}</p>
+    {% endif %}
+
+    <!-- Forecast -->
+    {% if forecast %}
+        <h2 style="text-align: center;">5-Day Forecast</h2>
+        <div class="forecast-container">
+            {% for day in forecast %}
+                <div>
+                    <strong>{{ day.date }}</strong><br>
+                    {{ day.temp }}°C<br>
+                    {{ day.desc }}<br>
+                    <img src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png" alt="icon">
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Saved Searches -->
+    {% if saved %}
+        <h2 style="text-align: center;">Saved Searches</h2>
+        <table>
+            <tr>
+                <th>City</th>
+                <th>Temperature</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            {% for item in saved %}
+                <tr>
+                    <td>{{ item.city }}</td>
+                    <td>{{ item.temperature }}°C</td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        <form method="POST" action="/delete" style="display:inline;">
+                            <input type="hidden" name="id" value="{{ item._id }}">
+                            <button type="submit" onclick="return confirm('Delete this search?')">Delete</button>
+                        </form>
+                        <form method="POST" action="/update" style="display:inline;">
+                            <input type="hidden" name="id" value="{{ item._id }}">
+                            <input type="text" name="new_city" placeholder="New city" required>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
