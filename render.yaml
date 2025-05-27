@@ -6,6 +6,6 @@ services:
     startCommand: "python app.py"
     envVars:
       - key: WEATHER_API_KEY
-        value: 9857c85f62fb25d13182fb79f120e98c
+        value: 
       - key: MONGO_URI
-        value: mongodb+srv://swati:mongodb45@cluster0.41brd5v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+        value: 
