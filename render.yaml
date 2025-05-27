@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: weather-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
+    envVars:
+      - key: WEATHER_API_KEY
+        value: 9857c85f62fb25d13182fb79f120e98c
+      - key: MONGO_URI
+        value: mongodb+srv://swati:mongodb45@cluster0.41brd5v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
